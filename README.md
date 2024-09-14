@@ -20,7 +20,7 @@ A Flutter application showcasing clean code practices, featuring a custom steppe
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/your-username/order-details-app.git
+   https://github.com/SivaranjanVithushan/merchant_app.git
    cd order-details-app
    flutter pub get
    flutter run
