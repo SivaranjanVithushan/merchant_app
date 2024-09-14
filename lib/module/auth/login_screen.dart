@@ -12,10 +12,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController =
-      TextEditingController(text: 'vithushan@gmail.com');
-  final TextEditingController _passwordController =
-      TextEditingController(text: '111111111');
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isRememberMeChecked = false;
   bool _isLoading = false;
 
@@ -24,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (email == null || email.isEmpty) {
       return 'Please enter your email';
     }
-    final emailPattern = r'^[^@\s]+@[^@\s]+\.[^@\s]+$';
+    const emailPattern = r'^[^@\s]+@[^@\s]+\.[^@\s]+$';
     if (!RegExp(emailPattern).hasMatch(email)) {
       return 'Please enter a valid email address';
     }
