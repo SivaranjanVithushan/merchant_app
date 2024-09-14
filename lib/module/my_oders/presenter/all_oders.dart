@@ -52,18 +52,18 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
             child: ListView(
               padding: const EdgeInsets.all(16.0),
               children: [
-                _buildOrderItem(
-                    'CFC0060300', 'Confirmed', Colors.blue[100], Colors.blue),
-                _buildOrderItem(
-                    'CFC0060300', 'Cancelled', Colors.red[100], Colors.red),
-                _buildOrderItem(
-                    'CFC0060300', 'Delivered', Colors.green[100], Colors.green),
-                _buildOrderItem(
-                    'CFC0060300', 'Confirmed', Colors.blue[100], Colors.blue),
-                _buildOrderItem(
-                    'CFC0060300', 'Cancelled', Colors.red[100], Colors.red),
-                _buildOrderItem(
-                    'CFC0060300', 'Delivered', Colors.green[100], Colors.green),
+                _buildOrderItem('CFC0060300', 'Confirmed', Colors.blue[100],
+                    const Color(0xff1E73BE)),
+                _buildOrderItem('CFC0060300', 'Cancelled', Colors.red[100],
+                    const Color(0xff822E22)),
+                _buildOrderItem('CFC0060300', 'Delivered', Colors.green[100],
+                    const Color(0xff19813C)),
+                _buildOrderItem('CFC0060300', 'Confirmed', Colors.blue[100],
+                    const Color(0xff1E73BE)),
+                _buildOrderItem('CFC0060300', 'Cancelled', Colors.red[100],
+                    const Color(0xff822E22)),
+                _buildOrderItem('CFC0060300', 'Delivered', Colors.green[100],
+                    const Color(0xff19813C)),
               ],
             ),
           ),
@@ -78,25 +78,36 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: ListTile(
-          title: Text(
-            orderNumber,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          contentPadding: EdgeInsets.zero,
+          title: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              orderNumber,
+              style: GoogleFonts.montserrat(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xff606060)),
+            ),
           ),
           trailing: Row(mainAxisSize: MainAxisSize.min, children: [
             Container(
               decoration: BoxDecoration(
                 color: bgColor,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(16.0),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              child: Text(
-                status,
-                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-              ),
+              child: Text(status,
+                  style: GoogleFonts.inter(
+                    color: textColor,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w500,
+                  )),
             ),
-            const SizedBox(width: 12),
             IconButton(
-              icon: const Icon(Icons.more_vert),
+              icon: const Icon(
+                Icons.more_vert,
+                color: Color(0xff606060),
+              ),
               onPressed: () {
                 showDialog(
                   context: context,
