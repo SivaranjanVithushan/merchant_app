@@ -13,18 +13,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return MainLayout(
       appbarTitle: "Dashboard",
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildOrdersStatisticsCard(),
-              const SizedBox(height: 16),
-              _buildFinanceStatisticsCard(),
-              const SizedBox(height: 16),
-              _buildStatusStatisticsCard(),
-              const SizedBox(height: 24),
+              Expanded(
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    _buildOrdersStatisticsCard(),
+                    const SizedBox(height: 16),
+                    _buildFinanceStatisticsCard(),
+                    const SizedBox(height: 16),
+                    _buildStatusStatisticsCard(),
+                  ],
+                ),
+              ),
               const Text(
                 'Powered by curfox.lk',
                 textAlign: TextAlign.center,

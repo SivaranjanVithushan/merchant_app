@@ -76,22 +76,17 @@ class SideNavigation extends StatelessWidget {
                 child: ListView(
                   physics: const BouncingScrollPhysics(),
                   children: [
+                    _buildMenuItem(context, 'Profile Details',
+                        'View & Edit details', () {}),
+                    _buildMenuItem(context, 'Dashboard', 'View Deatils', () {
+                      Navigator.pushNamed(context, '/dashboard');
+                    }),
+                    _buildMenuItem(context, 'My Oders', 'View Oders', () {
+                      Navigator.pushNamed(context, '/my-oders');
+                    }),
                     _buildMenuItem(
-                        context,
-                        'Profile Details',
-                        'View & Edit details',
-                        'assets/icons/profile/person.svg',
-                        () {}),
-                    _buildMenuItem(context, 'Appearance', 'Theme & Font',
-                        'assets/icons/profile/Appearance.svg', () {}),
-                    _buildMenuItem(context, 'Help', 'Support & Help',
-                        'assets/icons/profile/Help.svg', () {}),
-                    _buildMenuItem(
-                        context,
-                        'Refer Friends',
-                        'Share with friends',
-                        'assets/icons/profile/ReferFriends.svg',
-                        () {}),
+                        context, 'Appearance', 'Theme & Font', () {}),
+                    _buildMenuItem(context, 'Help', 'Support & Help', () {}),
                   ],
                 ),
               ),
@@ -110,8 +105,8 @@ class SideNavigation extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, String title, String subtitle,
-      String iconPath, Function onTap) {
+  Widget _buildMenuItem(
+      BuildContext context, String title, String subtitle, Function onTap) {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(

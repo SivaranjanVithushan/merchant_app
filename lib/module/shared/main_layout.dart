@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:merchant_app/core/theme_data/colour_scheme.dart';
 
@@ -20,12 +21,14 @@ class _MainLayoutState extends State<MainLayout> {
       backgroundColor: background,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        // title: widget.appbarTitle != null
-        //     ? Text(
-        //         widget.appbarTitle!,
-        //         style: const TextStyle(fontWeight: FontWeight.bold),
-        //       )
-        //     : null,
+        title: widget.appbarTitle != null
+            ? Text(widget.appbarTitle!,
+                style: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ))
+            : null,
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none),
