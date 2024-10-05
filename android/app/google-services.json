@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "843588128445",
+    "project_id": "merchantapp-5014d",
+    "storage_bucket": "merchantapp-5014d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843588128445:android:cb1a44d7a9f163763bf1d4",
+        "android_client_info": {
+          "package_name": "com.example.merchant_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG98W7749q0eBYivO9GPPYt6AoUR1n-HI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -79,10 +79,10 @@ class SideNavigation extends StatelessWidget {
                     _buildMenuItem(context, 'Profile Details',
                         'View & Edit details', () {}),
                     _buildMenuItem(context, 'Dashboard', 'View Deatils', () {
-                      Navigator.pushNamed(context, '/dashboard');
+                      Navigator.pushReplacementNamed(context, '/dashboard');
                     }),
                     _buildMenuItem(context, 'My Oders', 'View Oders', () {
-                      Navigator.pushNamed(context, '/my-oders');
+                      Navigator.pushReplacementNamed(context, '/my-oders');
                     }),
                     _buildMenuItem(
                         context, 'Appearance', 'Theme & Font', () {}),
