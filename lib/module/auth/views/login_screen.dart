@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:merchant_app/core/theme_data/colour_scheme.dart';
-import 'package:merchant_app/module/auth/controllers/auth_controller.dart';
+import '../../../core/theme_data/colour_scheme.dart';
+import '../../../core/theme_data/text_theme.dart';
+import '../controllers/auth_controller.dart';
 
-import '../../core/theme_data/text_theme.dart';
-
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
   final AuthController _authController = AuthController();
-  bool _isAgreeToTermsChecked = false;
   bool _isLoading = false;
 
   void _showErrorSnackBar(String message) {
@@ -29,16 +25,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      if (!_isAgreeToTermsChecked) {
-        _showErrorSnackBar('You must agree to the terms');
-        return;
-      }
-
       setState(() {
         _isLoading = true;
       });
 
-      _authController.signUp(
+      _authController.login(
         _emailController.text,
         _passwordController.text,
         (errorMessage) {
@@ -118,51 +109,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         validator: _authController.validatePassword,
                       ),
-                      const SizedBox(height: 20),
-                      // Confirm Password TextField
-                      TextFormField(
-                        controller: _confirmPasswordController,
-                        obscureText: true,
-                        style: textTheme.titleSmall!.copyWith(
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.lock_outline,
-                            size: 24,
-                            color: Color(0xff6C6868),
-                          ),
-                          hintText: 'Confirm your password',
-                          hintStyle: textTheme.titleSmall!.copyWith(
-                            color: const Color(0xff7C7070).withOpacity(0.5),
-                          ),
-                        ),
-                        validator: (value) =>
-                            _authController.validateConfirmPassword(
-                          value,
-                          _passwordController.text,
-                        ),
-                      ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _isAgreeToTermsChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          _isAgreeToTermsChecked = value ?? false;
-                        });
-                      },
-                    ),
-                    Text(
-                      'Agree to terms and conditions',
-                      style: textTheme.titleSmall!
-                          .copyWith(color: const Color(0xff666666)),
-                    ),
-                  ],
                 ),
                 const SizedBox(height: 8),
                 Container(
@@ -193,9 +141,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: _isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Sign Up',
+                            'Login',
                             style: textTheme.titleSmall,
                           ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/signUp');
+                  },
+                  child: Text(
+                    'Don\'t have an account? Sign up',
+                    style: textTheme.titleSmall!.copyWith(
+                      color: primaryDefault,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Image Placeholder at the bottom
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    'assets/gif/delivery.gif', // Replace with your asset path
+                    width: 248,
                   ),
                 ),
               ],

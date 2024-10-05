@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme_data/colour_scheme.dart';
-import '../../core/theme_data/text_theme.dart';
+import '../../../core/theme_data/colour_scheme.dart';
+import '../../../core/theme_data/text_theme.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
