@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merchant_app/core/auth/auth_datasources.dart';
 import '../../../core/theme_data/colour_scheme.dart';
 import '../../../core/theme_data/text_theme.dart';
 
@@ -87,6 +88,10 @@ class SideNavigation extends StatelessWidget {
                     _buildMenuItem(
                         context, 'Appearance', 'Theme & Font', () {}),
                     _buildMenuItem(context, 'Help', 'Support & Help', () {}),
+                    _buildMenuItem(context, 'Logout', 'To exit the app', () {
+                      AuthDataSources().clearUserData();
+                      Navigator.pushReplacementNamed(context, '/login');
+                    }),
                   ],
                 ),
               ),

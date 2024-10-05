@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../core/auth/auth_datasources.dart';
+
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
 
@@ -10,13 +12,23 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
+  final AuthDataSources _authDataSources = AuthDataSources();
   @override
   initState() {
     super.initState();
-    Timer(const Duration(seconds: 1), () {
-      // Navigate to your main page after the splash screen
+    _checkLoginStatus();
+  }
+
+// Check if user is logged in
+  Future<void> _checkLoginStatus() async {
+    bool isLoggedIn = await _authDataSources.isUserLoggedIn();
+    if (isLoggedIn) {
+      // Navigate to dashboard if the user is logged in
+      Navigator.of(context).pushReplacementNamed('/dashboard');
+    } else {
+      // Navigate to login if the user is not logged in
       Navigator.of(context).pushReplacementNamed('/login');
-    });
+    }
   }
 
   @override

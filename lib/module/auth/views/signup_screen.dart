@@ -201,7 +201,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/signUp');
+                    Navigator.of(context).pushReplacementNamed('/login');
                   },
                   child: Text(
                     'if you have an account? Login',

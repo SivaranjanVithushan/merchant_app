@@ -1,45 +1,67 @@
-// import 'dart:convert';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// class AuthDataSources {
-//   late SharedPreferences prefs;
+class AuthDataSources {
+  late SharedPreferences prefs;
 
-//   Future<User?> getUserData() async {
-//     prefs = await SharedPreferences.getInstance();
-//     String? jsonStringFromPrefs = prefs.getString('userData');
-//     if (jsonStringFromPrefs != null) {
-//       // print('User data found in SharedPreferences: $jsonStringFromPrefs');
-//       Map<String, dynamic> json = jsonDecode(jsonStringFromPrefs);
-//       User? user = User.fromJson(json);
-//       // print('User data parsed from JSON: $user');
-//       return user;
-//     } else {
-//       // print('No user data found in SharedPreferences');
-//       return null;
-//     }
-//   }
+  // Save user data to SharedPreferences
+  Future<void> saveUserData(User user) async {
+    prefs = await SharedPreferences.getInstance();
+    String jsonString = jsonEncode(user.toJson());
+    await prefs.setString('userData', jsonString);
+  }
 
-//   Future<bool> isUserLoggedIn() async {
-//     User? user = await getUserData();
-//     if (user != null) {
-//       if (user.token != null) {
-//         // print('User is logged in');
-//         return true;
-//       }
-//     }
+  // Retrieve user data from SharedPreferences
+  Future<User?> getUserData() async {
+    prefs = await SharedPreferences.getInstance();
+    String? jsonStringFromPrefs = prefs.getString('userData');
+    if (jsonStringFromPrefs != null) {
+      Map<String, dynamic> json = jsonDecode(jsonStringFromPrefs);
+      User? user = User.fromJson(json);
+      return user;
+    } else {
+      return null;
+    }
+  }
 
-//     // print('User is not logged in');
-//     return false;
-//   }
+  // Check if the user is logged in
+  Future<bool> isUserLoggedIn() async {
+    User? user = await getUserData();
+    return user != null && user.token != null;
+  }
 
-//   Future<String?> getToken() async {
-//     User? user = await getUserData();
-//     if (user != null) {
-//       // print('User token found: ${user.token}');
-//       return user.token;
-//     }
+  // Get user token
+  Future<String?> getToken() async {
+    User? user = await getUserData();
+    return user?.token;
+  }
 
-//     // print('User token not found');
-//     return null;
-//   }
-// }
+  // Clear user data (for logging out)
+  Future<void> clearUserData() async {
+    prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userData');
+  }
+}
+
+class User {
+  String? token;
+  String? email;
+
+  User({this.token, this.email});
+
+  // Convert a User object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'token': token,
+      'email': email,
+    };
+  }
+
+  // Convert JSON to a User object
+  static User fromJson(Map<String, dynamic> json) {
+    return User(
+      token: json['token'],
+      email: json['email'],
+    );
+  }
+}

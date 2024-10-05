@@ -1,7 +1,9 @@
+import 'package:merchant_app/core/auth/auth_datasources.dart';
 import 'package:merchant_app/module/auth/model/auth_model.dart';
 
 class AuthController {
   final AuthModel _authModel = AuthModel();
+  final AuthDataSources _authDataSources = AuthDataSources();
 
   // Form validation logic for email and password
   String? validateEmail(String? email) {
@@ -42,7 +44,9 @@ class AuthController {
     Function onSuccess,
   ) async {
     try {
-      await _authModel.signUp(email, password);
+      final data = await _authModel.signUp(email, password);
+      await _authDataSources
+          .saveUserData(User(email: data.user!.email, token: data.user!.uid));
       onSuccess();
     } catch (error) {
       onError(error.toString());
@@ -57,7 +61,33 @@ class AuthController {
     Function onSuccess,
   ) async {
     try {
-      await _authModel.login(email, password);
+      final data = await _authModel.login(email, password);
+      await _authDataSources
+          .saveUserData(User(email: data.user!.email, token: data.user!.uid));
+      onSuccess();
+    } catch (error) {
+      onError(error.toString());
+    }
+  }
+
+  // Submit forgot password form
+  Future<void> sendPasswordResetEmail(
+    String email,
+    Function(String) onError,
+    Function onSuccess,
+  ) async {
+    try {
+      await _authModel.sendPasswordResetEmail(email);
+      onSuccess();
+    } catch (error) {
+      onError(error.toString());
+    }
+  }
+
+  // log out method
+  Future<void> logout(Function onError, Function onSuccess) async {
+    try {
+      await _authDataSources.clearUserData();
       onSuccess();
     } catch (error) {
       onError(error.toString());

@@ -147,9 +147,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/signUp');
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/forgot-password');
+                  },
+                  child: Text(
+                    'Forgot password?',
+                    style: textTheme.titleSmall!.copyWith(
+                      color: const Color(0xff7294EB),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/signUp');
                   },
                   child: Text(
                     'Don\'t have an account? Sign up',

@@ -27,6 +27,15 @@ class AuthModel {
     }
   }
 
+  // Send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw _handleFirebaseAuthError(e);
+    }
+  }
+
   // Firebase authentication error handling
   String _handleFirebaseAuthError(FirebaseAuthException e) {
     switch (e.code) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../controllers/auth_controller.dart';
 import '../../../core/theme_data/colour_scheme.dart';
 import '../../../core/theme_data/text_theme.dart';
 
@@ -13,36 +13,41 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final AuthController _authController = AuthController();
   bool _isLoading = false;
 
-  // Email Validation Logic
-  String? _validateEmail(String? email) {
-    if (email == null || email.isEmpty) {
-      return 'Please enter your email';
-    }
-    const emailPattern = r'^[^@\s]+@[^@\s]+\.[^@\s]+$';
-    if (!RegExp(emailPattern).hasMatch(email)) {
-      return 'Please enter a valid email address';
-    }
-    return null;
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
-  Future<void> _submit() async {
+  void _submit() {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
-      await Future.delayed(const Duration(seconds: 2)); // Mock network call
-
-      setState(() {
-        _isLoading = false;
-      });
-      // For now, just print success message
-      // You would replace this with actual login logic
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Check your mail address ${_emailController.text}')),
+      _authController.sendPasswordResetEmail(
+        _emailController.text,
+        (errorMessage) {
+          setState(() {
+            _isLoading = false;
+          });
+          _showErrorSnackBar(errorMessage);
+        },
+        () {
+          setState(() {
+            _isLoading = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Check your email at ${_emailController.text} for password reset instructions.',
+              ),
+            ),
+          );
+        },
       );
     }
   }
@@ -63,24 +68,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context)
-              .unfocus(), // To dismiss the keyboard when tapping outside
+          onTap: () =>
+              FocusScope.of(context).unfocus(), // To dismiss the keyboard
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                   Image.asset(
                     'assets/images/logo.png', // Update the path to your logo image
                     width: 120.0,
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  // Email TextField
+                  const SizedBox(height: 20),
                   Form(
                     key: _formKey,
                     child: Column(
@@ -109,14 +109,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 .copyWith(color: Colors.black),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
-                          validator: _validateEmail,
+                          validator: _authController.validateEmail,
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Remember Me Checkbox
-
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -151,9 +149,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // Forgot Password Link
-
-                  // Image Placeholder at the bottom
                   Image.asset(
                     'assets/gif/delivery.gif', // Replace with your asset path
                     width: 248,
