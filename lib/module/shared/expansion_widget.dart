@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../core/theme_data/text_theme.dart';
 
 class ExpandableContainer extends StatefulWidget {
@@ -34,7 +33,8 @@ class _ExpandableContainerState extends State<ExpandableContainer> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      // overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: () {
         setState(() {
           isExpanded = !isExpanded;

@@ -81,6 +81,8 @@ final ColorScheme darkColorScheme = ColorScheme(
   tertiary: primaryLighter,
   onTertiaryContainer: primaryLighter,
   surfaceTint: Colors.black,
+  background: const Color(0xff1A1D1F),
+  onBackground: Colors.white,
 );
 
 // Light theme data
@@ -100,4 +102,6 @@ final ColorScheme lightColorScheme = ColorScheme(
   tertiary: primaryLighter,
   onTertiaryContainer: primaryLighter,
   surfaceTint: primaryDefault,
+  background: const Color(0xffF9FCFE),
+  onBackground: const Color(0xff161D1C),
 );
