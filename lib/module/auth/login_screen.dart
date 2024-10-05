@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import '../../core/theme_data/colour_scheme.dart';
 import '../../core/theme_data/text_theme.dart';
 
@@ -16,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isRememberMeChecked = false;
   bool _isLoading = false;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Email Validation Logic
   String? _validateEmail(String? email) {
@@ -46,14 +50,44 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      await Future.delayed(const Duration(seconds: 2)); // Mock network call
-
-      setState(() {
-        _isLoading = false;
-      });
-      // For now, just print success message
-      // You would replace this with actual login logic
-      Navigator.of(context).pushReplacementNamed('/dashboard');
+      try {
+        // Firebase login logic
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+        log('User: ${userCredential.user}');
+        // Navigator.of(context).pushReplacementNamed('/dashboard');
+        if (userCredential.user != null) {
+          Navigator.of(context).pushReplacementNamed('/dashboard');
+        }
+      } on FirebaseAuthException catch (e) {
+        // Handle Firebase authentication errors
+        String errorMessage;
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No user found with this email.';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Incorrect password.';
+        } else if (e.code == 'invalid-email') {
+          errorMessage = 'The email address is badly formatted.';
+        } else {
+          errorMessage = 'Authentication failed. Please try again.';
+        }
+        // Show the error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      } catch (e) {
+        // General error handling (e.g., network issues)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Something went wrong. Please try again.')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
