@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/main_layout.dart';
+import '../../shared/main_layout.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

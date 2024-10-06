@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:merchant_app/core/theme_data/colour_scheme.dart';
-import 'package:merchant_app/module/my_oders/presenter/widgets/order_detail_popup.dart';
+import 'package:merchant_app/module/my_oders/views/widgets/order_detail_popup.dart';
 import 'package:merchant_app/module/shared/main_layout.dart';
 
 class AllOrdersScreen extends StatefulWidget {

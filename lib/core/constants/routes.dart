@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:merchant_app/module/my_oders/presenter/all_oders.dart';
-import 'package:merchant_app/module/my_oders/presenter/my_oders_screen.dart';
+import 'package:merchant_app/module/my_oders/views/all_oders.dart';
+import 'package:merchant_app/module/my_oders/views/my_oders_screen.dart';
 import '../../module/auth/views/forgot_password.dart';
 import '../../module/auth/loading_page.dart';
 import '../../module/auth/views/login_screen.dart';
 import '../../module/auth/views/signup_screen.dart';
-import '../../module/dashboard/dashboard_screen.dart';
-import '../../module/dashboard/status_statistics_screen.dart';
+import '../../module/dashboard/views/dashboard_screen.dart';
+import '../../module/dashboard/views/status_statistics_screen.dart';
 
 final routes = {
   '/': (BuildContext context) => const LoadingPage(),

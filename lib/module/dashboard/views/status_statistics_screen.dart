@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:merchant_app/core/theme_data/text_theme.dart';
+import 'package:merchant_app/module/dashboard/model/download_oders_excel.dart';
 
-import '../shared/expansion_widget.dart';
-import '../shared/main_layout.dart';
+import '../../shared/expansion_widget.dart';
+import '../../shared/main_layout.dart';
 
 class StatusStatisticsScreen extends StatefulWidget {
   const StatusStatisticsScreen({super.key});
@@ -35,6 +36,10 @@ class _StatusStatisticsScreenState extends State<StatusStatisticsScreen> {
                       style:
                           textTheme.titleSmall!.copyWith(color: Colors.black),
                     ),
+                    TextButton(
+                      onPressed: downloadOrdersAsExcel,
+                      child: const Text('Download Orders as Excel'),
+                    )
                   ],
                 ),
               ),
